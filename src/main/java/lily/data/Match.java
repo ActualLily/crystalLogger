@@ -2,8 +2,6 @@ package lily.data;
 
 import lily.TesseractUtil;
 import net.sourceforge.tess4j.TesseractException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Logger;
 
 import java.awt.*;
 import java.io.File;
@@ -15,12 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Match {
-
-    static Logger log = (Logger) LogManager.getLogger(Match.class.getName());
-
     long matchDate = 0;
     int matchTime = 0;
     File image;
+    String winner;
 
     List<Player> participants = new LinkedList<>();
 
@@ -39,10 +35,17 @@ public class Match {
                 participants.add(new Player(TesseractUtil.getTesseract().doOCR(image, new Rectangle(90, 405 + ((i - 1) * 51), 1730, 51))));
             }
 
+            System.out.println(winner);
+            // First 5 participants are in the winning team
+            for (int i = 0; i < 5; i++) {
+                participants.get(i).setWinner(true);
+            }
 
         } catch (TesseractException e) {
             e.printStackTrace();
         }
+
+
     }
 
     public int getMatchTime() {

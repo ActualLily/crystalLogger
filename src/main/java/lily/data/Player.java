@@ -14,6 +14,8 @@ public class Player {
     Integer damageDone, damageTaken, damageHealed = null;
     Integer objectiveTime = null;
 
+    boolean isWinner = false;
+
     String tesseractData;
 
     public Player(String tesseractData) {
@@ -35,15 +37,60 @@ public class Player {
         objectiveTime = TesseractUtil.minuteSecondToSeconds(TesseractUtil.sanitizeToNumbers(getWordList().get(currentWord++)));
     }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public Integer getKills() {
+        return kills;
+    }
+
+    public Integer getDeaths() {
+        return deaths;
+    }
+
+    public Integer getAssists() {
+        return assists;
+    }
+
+    public Integer getDamageDone() {
+        return damageDone;
+    }
+
+    public Integer getDamageTaken() {
+        return damageTaken;
+    }
+
+    public Integer getDamageHealed() {
+        return damageHealed;
+    }
+
+    public Integer getObjectiveTime() {
+        return objectiveTime;
+    }
+
+    public boolean isWinner() {
+        return isWinner;
+    }
+
+    public void setWinner(boolean winner) {
+        isWinner = winner;
+    }
+
     private LinkedList<String> getWordList() {
         int currentWord = 0;
         List<StringBuilder> words = new LinkedList<>();
-        words.add(currentWord, new StringBuilder(""));
+        words.add(currentWord, new StringBuilder());
 
         for (int i = 0; i < tesseractData.length(); i++) {
             if (tesseractData.charAt(i) == ' ') {
                 currentWord++;
-                words.add(currentWord, new StringBuilder(""));
+                words.add(currentWord, new StringBuilder());
             } else {
                 words.get(currentWord).append(tesseractData.charAt(i));
             }
@@ -51,10 +98,15 @@ public class Player {
 
         LinkedList<String> stringList = new LinkedList<>();
 
-        for(StringBuilder stringBuilder : words) {
+        for (StringBuilder stringBuilder : words) {
             stringList.add(stringBuilder.toString().replaceAll("!", "l"));
         }
 
         return stringList;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + rank + ") " + kills + "/" + deaths + "/" + assists;
     }
 }

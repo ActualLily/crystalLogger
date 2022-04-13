@@ -1,27 +1,32 @@
 package lily;
 
 import lily.data.Match;
-import net.sourceforge.tess4j.ITesseract;
-import net.sourceforge.tess4j.Tesseract1;
 import net.sourceforge.tess4j.TesseractException;
-import net.sourceforge.tess4j.util.LoadLibs;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 public class ApplicationStarter {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String basePath = "C:\\Users\\cearu\\Documents\\ShareX\\Screenshots\\2022-04\\";
-        String imagePath = "ffxiv_dx11_UffIXhrnVX.png";
+
+        List<Match> matchList = new LinkedList<>();
 
         try {
-            Match currentMatch = new Match(basePath + imagePath);
-            System.out.println(currentMatch.getMatchTime());
+            for (File file : Objects.requireNonNull(new File(basePath).listFiles())) {
 
-        } catch (IOException e) {
+                if (TesseractUtil.isValidMatchLog(file.getAbsolutePath())) {
+                    matchList.add(new Match(file.getAbsolutePath()));
+                }
+            }
+
+            System.out.println(matchList.size());
+
+        } catch (IOException | TesseractException e) {
             e.printStackTrace();
         }
 
