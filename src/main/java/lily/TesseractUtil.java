@@ -29,6 +29,17 @@ public class TesseractUtil {
     }
 
     public static String sanitizeToNumbers(String input) {
-        return input.replaceAll("[^0-9]", "");
+        String sanitized = input.replaceAll("O", "0");
+        sanitized = sanitized.replaceAll("[^0-9]", "");
+
+        return sanitized;
     }
+
+    public static int minuteSecondToSeconds(String mss) {
+        int seconds = Integer.parseInt(mss.substring(mss.length() - 2));
+        int minutes = Integer.parseInt(mss.substring(0, mss.length() - 2));
+
+        return minutes * 60 + seconds;
+    }
+
 }

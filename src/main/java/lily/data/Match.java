@@ -11,7 +11,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.logging.Level;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Match {
 
@@ -21,6 +22,8 @@ public class Match {
     int matchTime = 0;
     File image;
 
+    List<Player> participants = new LinkedList<>();
+
     public Match(String imageLocation) throws IOException {
         this.image = new File(imageLocation);
 
@@ -28,9 +31,15 @@ public class Match {
         matchDate = view.creationTime().toMillis();
 
         try {
-            matchTime = minuteSecondToSeconds(
+            matchTime = TesseractUtil.minuteSecondToSeconds(
                     TesseractUtil.sanitizeToNumbers(
                             TesseractUtil.getTesseract().doOCR(image, new Rectangle(1730, 300, 120, 40))));
+
+            for (int i = 1; i <= 10; i++) {
+                participants.add(new Player(TesseractUtil.getTesseract().doOCR(image, new Rectangle(90, 405 + ((i - 1) * 51), 1730, 51))));
+            }
+
+
         } catch (TesseractException e) {
             e.printStackTrace();
         }
@@ -42,13 +51,6 @@ public class Match {
 
     public File getImage() {
         return image;
-    }
-
-    private int minuteSecondToSeconds(String mss) {
-        int seconds = Integer.parseInt(mss.substring(mss.length() - 2));
-        int minutes = Integer.parseInt(mss.substring(0, mss.length() - 2));
-
-        return minutes * 60 + seconds;
     }
 
 }
