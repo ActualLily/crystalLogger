@@ -49,6 +49,42 @@ public class Player {
         objectiveTime = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_TIME, playerNumber));
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public Integer getKills() {
+        return kills;
+    }
+
+    public Integer getDeaths() {
+        return deaths;
+    }
+
+    public Integer getAssists() {
+        return assists;
+    }
+
+    public Integer getDamageDone() {
+        return damageDone;
+    }
+
+    public Integer getDamageTaken() {
+        return damageTaken;
+    }
+
+    public Integer getDamageHealed() {
+        return damageHealed;
+    }
+
+    public Integer getObjectiveTime() {
+        return objectiveTime;
+    }
+
     @Override
     public String toString() {
         return name + " (" + rank + ") " + kills + "/" + deaths + "/" + assists;

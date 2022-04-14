@@ -41,5 +41,10 @@ public class Team {
                 teamAssists = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.UMBRA_ASSISTS));
             }
         }
+
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

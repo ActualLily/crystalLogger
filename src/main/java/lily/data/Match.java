@@ -35,14 +35,13 @@ public class Match {
 
         teams.add(new Team(file, TeamName.ASTRA, (winningTeam == TeamName.ASTRA)));
         teams.add(new Team(file, TeamName.UMBRA, (winningTeam == TeamName.UMBRA)));
-
     }
 
     public int getMatchTime() {
         return matchTime;
     }
 
-    public File getFile() {
-        return file;
+    public List<Team> getTeams() {
+        return teams;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Configuration status="trace">
+<Configuration status="info">
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="[%-5p | %d{HH:mm:ss}] %m%n"/>
