@@ -46,7 +46,6 @@ public class TesseractUtil {
         if (Integer.class.equals(data.type())) {
             tesseract.setVariable("tessedit_char_whitelist", "0123456789");
             ocrData = tesseract.doOCR(file, playerAdjustedBounds).trim();
-            log.debug("OCR " + data.name() + ": " + ocrData);
             tesseract.setVariable("tessedit_char_whitelist", "");
 
             if (ocrData.equals("")) {
@@ -55,9 +54,10 @@ public class TesseractUtil {
             }
 
         } else {
-            ocrData = tesseract.doOCR(file, data.bounds()).trim();
+            ocrData = tesseract.doOCR(file, playerAdjustedBounds).trim();
         }
 
+        log.debug("OCR " + data.name() + ": " + ocrData);
         return ocrData;
     }
 

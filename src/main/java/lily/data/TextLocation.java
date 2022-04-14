@@ -12,7 +12,7 @@ public enum TextLocation {
 
     PLAYER_NAME(new Rectangle(PLAYER_DATA.bounds.x, PLAYER_DATA.bounds.y, 290, PLAYER_DATA.bounds.height / 10), String.class),
     PLAYER_SERVER(new Rectangle(408, PLAYER_DATA.bounds.y, 190, PLAYER_DATA.bounds.height / 10), String.class),
-    PLAYER_RANK(new Rectangle(644, PLAYER_DATA.bounds.y, 190, PLAYER_DATA.bounds.height / 10), String.class),
+    PLAYER_RANK(new Rectangle(644, PLAYER_DATA.bounds.y, 120, PLAYER_DATA.bounds.height / 10), String.class),
 
     PLAYER_KILLS(new Rectangle(804, PLAYER_DATA.bounds.y, 42, PLAYER_DATA.bounds.height / 10), Integer.class),
     PLAYER_DEATHS(new Rectangle(PLAYER_KILLS.bounds.x + 64, PLAYER_DATA.bounds.y, PLAYER_KILLS.bounds.width, PLAYER_DATA.bounds.height / 10), Integer.class),

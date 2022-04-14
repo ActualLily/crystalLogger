@@ -8,7 +8,8 @@ import java.io.IOException;
 
 public class Player {
 
-    String name = "Liya Massemeure@Mateus";
+    String name;
+    String server;
     String rank;
 
     Integer kills;
@@ -25,10 +26,21 @@ public class Player {
 
     public Player(File file, Integer playerNumber) throws TesseractException, IOException {
         name = TesseractUtil.doOCR(file, TextLocation.PLAYER_NAME, playerNumber);
+        server = TesseractUtil.doOCR(file, TextLocation.PLAYER_SERVER, playerNumber);
+        rank = TesseractUtil.doOCR(file, TextLocation.PLAYER_RANK, playerNumber);
+        if (rank.equals("")) {
+            rank = "Unranked";
+        }
 
         kills = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_KILLS, playerNumber));
         deaths = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_DEATHS, playerNumber));
         assists = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_ASSISTS, playerNumber));
+
+        damageDone = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_DEALT, playerNumber));
+        damageTaken = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_TAKEN, playerNumber));
+        damageHealed = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_HEALED, playerNumber));
+
+        objectiveTime = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_TIME, playerNumber));
     }
 
     @Override
