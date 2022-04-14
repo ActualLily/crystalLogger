@@ -25,7 +25,7 @@ public class ApplicationStarter {
                     }
 
                 } catch (ImageSizeException e) {
-                    continue;
+                    e.printStackTrace();
                 }
             }
 
