@@ -19,7 +19,7 @@ public class Match {
 
     List<Team> teams = new LinkedList<>();
 
-    public Match(File file) throws IOException, TesseractException, ImageSizeException {
+    public Match(File file) throws IOException, TesseractException {
         this.file = file;
 
         if (TesseractUtil.doOCR(file, TextLocation.WINNING_TEAM).substring(0, 5).equals(TeamName.ASTRA.stringName())) {

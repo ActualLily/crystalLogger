@@ -20,10 +20,14 @@ public class Team {
 
     boolean isWinner;
 
-    public Team(File file, TeamName teamName, boolean isWinner) throws TesseractException, ImageSizeException, IOException {
+    public Team(File file, TeamName teamName, boolean isWinner) throws TesseractException, IOException {
         this.file = file;
         this.teamName = teamName;
         this.isWinner = isWinner;
+
+        for (int i = 1; i <= 10; i++) {
+            players.add(new Player(file, i));
+        }
 
         switch (teamName) {
             case ASTRA -> {

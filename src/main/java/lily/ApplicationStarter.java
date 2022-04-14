@@ -1,6 +1,5 @@
 package lily;
 
-import lily.data.ImageSizeException;
 import lily.data.Match;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -23,17 +22,15 @@ public class ApplicationStarter {
                     if (TesseractUtil.isValidMatch(file)) {
                         matchList.add(new Match(file));
                     }
-
-                } catch (ImageSizeException e) {
+                } catch (TesseractException e) {
                     e.printStackTrace();
+
+                    System.out.println(matchList.size());
+
                 }
             }
-
-            System.out.println(matchList.size());
-
-        } catch (IOException | TesseractException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
