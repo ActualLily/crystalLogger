@@ -2,11 +2,15 @@ package lily.data;
 
 import lily.TesseractUtil;
 import net.sourceforge.tess4j.TesseractException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Player {
+
+    static Logger log = LogManager.getLogger("MAIN");
 
     String name;
     String server;
@@ -28,8 +32,10 @@ public class Player {
         name = TesseractUtil.doOCR(file, TextLocation.PLAYER_NAME, playerNumber);
         server = TesseractUtil.doOCR(file, TextLocation.PLAYER_SERVER, playerNumber);
         rank = TesseractUtil.doOCR(file, TextLocation.PLAYER_RANK, playerNumber);
+
         if (rank.equals("")) {
             rank = "Unranked";
+            log.debug("Correcting rank to Unranked");
         }
 
         kills = Integer.valueOf(TesseractUtil.doOCR(file, TextLocation.PLAYER_KILLS, playerNumber));
