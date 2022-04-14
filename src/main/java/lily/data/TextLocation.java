@@ -2,8 +2,8 @@ package lily.data;
 
 import java.awt.*;
 
-public enum TextLocations {
-    WINNING_TEAM(new Rectangle(859, 49, 205, 35), String.class),
+public enum TextLocation {
+    WINNING_TEAM(new Rectangle(859, 49, 205, 35), TeamName.class),
     TEAM_KDA(new Rectangle(540, 190, 1200, 28), String.class),
     KDA_BOUNDS(new Rectangle(160, 0, 81, 38), Integer.class),
     PLAYER_DATA(new Rectangle(96, 410, 1700, 500), String.class),
@@ -32,11 +32,10 @@ public enum TextLocations {
     UMBRA_DEATHS(new Rectangle(UMBRA_KILLS.bounds.x + KDA_BOUNDS.bounds.x, TEAM_KDA.bounds.y, KDA_BOUNDS.bounds.width, KDA_BOUNDS.bounds.height), Integer.class),
     UMBRA_ASSISTS(new Rectangle(UMBRA_DEATHS.bounds.x + KDA_BOUNDS.bounds.x, TEAM_KDA.bounds.y, KDA_BOUNDS.bounds.width, KDA_BOUNDS.bounds.height), Integer.class);
 
-
     Rectangle bounds;
     Class<?> returnType;
 
-    TextLocations(Rectangle bounds, Class<?> returnType) {
+    TextLocation(Rectangle bounds, Class<?> returnType) {
         this.bounds = bounds;
         this.returnType = returnType;
     }

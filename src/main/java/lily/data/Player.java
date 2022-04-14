@@ -2,10 +2,13 @@ package lily.data;
 
 import lily.TesseractUtil;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Player {
+
+    private final Integer playerNumber;
 
     String name = "Liya Massemeure@Mateus";
     String rank = null;
@@ -18,7 +21,10 @@ public class Player {
 
     String tesseractData;
 
-    public Player(String tesseractData) {
+    public Player(File file, Integer playerNumber) {
+
+        this.playerNumber = playerNumber;
+
         this.tesseractData = tesseractData;
         int currentWord = 0;
 

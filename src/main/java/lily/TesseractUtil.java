@@ -1,5 +1,8 @@
 package lily;
 
+import lily.data.ImageSizeException;
+import lily.data.TeamName;
+import lily.data.TextLocation;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract1;
 import net.sourceforge.tess4j.TesseractException;
@@ -13,6 +16,7 @@ import java.io.IOException;
 
 public class TesseractUtil {
 
+    private static final Rectangle EXPECTED_IMAGE = new Rectangle(0, 0, 1920, 1080);
     private static boolean init;
     private static final ITesseract tesseract = new Tesseract1();
 
@@ -28,27 +32,36 @@ public class TesseractUtil {
         }
     }
 
-    public static ITesseract getTesseract() {
+    public static String doOCR(File file, TextLocation data) throws TesseractException, IOException, ImageSizeException {
         ensureInit();
-        return tesseract;
+
+        // Make sure image doesn't exceed TextLocation bounds
+        BufferedImage bufferedImage = ImageIO.read(file);
+        String ocrData;
+
+        if (bufferedImage.getWidth() != EXPECTED_IMAGE.width && bufferedImage.getHeight() != EXPECTED_IMAGE.height) {
+            throw new ImageSizeException(EXPECTED_IMAGE.width, EXPECTED_IMAGE.height, bufferedImage.getWidth(), bufferedImage.getHeight());
+        }
+
+        if (Integer.class.equals(data.type())) {
+            tesseract.setVariable("tessedit_char_whitelist", "0123456789");
+            ocrData = tesseract.doOCR(file, data.bounds());
+            tesseract.setVariable("tessedit_char_whitelist", "");
+
+            if (ocrData.equals("")) {
+                ocrData = "0";
+            }
+        } else {
+            ocrData = tesseract.doOCR(file, data.bounds());
+        }
+
+        return ocrData.trim();
     }
 
-    public static boolean isValidMatchLog(String imageLocation) throws TesseractException, IOException {
-        File image = new File(imageLocation);
+    public static boolean isValidMatch(File file) throws TesseractException, ImageSizeException, IOException {
+        String teamName = doOCR(file, TextLocation.WINNING_TEAM);
 
-        BufferedImage bi = ImageIO.read(new File(imageLocation));
-
-        if (bi.getWidth() != 1920 && bi.getHeight() != 1080) {
-            return false;
-        }
-
-        String winningTeam = TesseractUtil.getTesseract().doOCR(image, new Rectangle(841, 44, 244, 42));
-
-        if (winningTeam.length() > 5) {
-            winningTeam = winningTeam.substring(0, 5);
-        }
-
-        return winningTeam.equals("Astra") || winningTeam.equals("Umbra");
+        return teamName.startsWith(TeamName.UMBRA.stringName()) || teamName.startsWith(TeamName.ASTRA.stringName());
     }
 
     public static String sanitizeToNumbers(String input) {

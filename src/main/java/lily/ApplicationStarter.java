@@ -1,5 +1,6 @@
 package lily;
 
+import lily.data.ImageSizeException;
 import lily.data.Match;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -18,9 +19,13 @@ public class ApplicationStarter {
 
         try {
             for (File file : Objects.requireNonNull(new File(basePath).listFiles())) {
+                try {
+                    if (TesseractUtil.isValidMatch(file)) {
+                        matchList.add(new Match(file));
+                    }
 
-                if (TesseractUtil.isValidMatchLog(file.getAbsolutePath())) {
-                    matchList.add(new Match(file.getAbsolutePath()));
+                } catch (ImageSizeException e) {
+                    continue;
                 }
             }
 
