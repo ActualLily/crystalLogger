@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Match {
     long matchDate = 0;
@@ -18,9 +18,11 @@ public class Match {
     File image;
     String winner;
 
-    List<Player> participants = new LinkedList<>();
+    Map<String, Team> teams = new HashMap<>();
 
     public Match(String imageLocation) throws IOException {
+        teams.put("Astra", new Team());
+        teams.put("Umbra", new Team());
         this.image = new File(imageLocation);
 
         BasicFileAttributes view = Files.getFileAttributeView(image.getAbsoluteFile().toPath(), BasicFileAttributeView.class).readAttributes();
