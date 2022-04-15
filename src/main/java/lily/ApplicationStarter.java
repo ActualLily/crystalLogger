@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +20,12 @@ public class ApplicationStarter {
 
     public static void main(String[] args) {
         String basePath = "C:\\Users\\cearu\\Documents\\ShareX\\Screenshots\\2022-04\\";
+
+        try {
+            DatabaseUtil.getDatabaseVersion();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         List<Match> matchList = new LinkedList<>();
 
